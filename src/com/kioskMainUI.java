@@ -46,6 +46,13 @@ public class kioskMainUI extends JFrame {
                 cardBtn.setEnabled(true);
             }
         });
+        scanItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cashBtn.setEnabled(false);
+                cardBtn.setEnabled(false);
+            }
+        });
     }
     public static void main(String[] args) {
         kioskMainUI Page = new kioskMainUI();
