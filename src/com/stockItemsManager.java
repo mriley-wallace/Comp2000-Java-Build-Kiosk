@@ -14,7 +14,7 @@ public class stockItemsManager {
         return stock;
     }
 
-    private ArrayList<stockItems> stock = new ArrayList<stockItems>();
+    private final ArrayList<stockItems> stock = new ArrayList<stockItems>();
 
     public void stockLoad(){
 
@@ -28,7 +28,6 @@ public class stockItemsManager {
                 String[] stockData = dataRow.split(separator);
 
                 stockItems newStock = new stockItems();
-
                 newStock.setName(stockData[0]);
 
                 float priceToFloat = Float.parseFloat(stockData[1]);
@@ -37,10 +36,10 @@ public class stockItemsManager {
                 int amountToInt = Integer.parseInt(stockData[2]);
                 newStock.setAmount(amountToInt);
 
-                String barcodeToInt = stockData[3];
-                newStock.setBarcode(barcodeToInt);
+                double barcodeToDouble = Double.parseDouble(stockData[3]);
+                newStock.setBarcode(barcodeToDouble);
 
-                String pluToInt = stockData[4];
+                int pluToInt = Integer.parseInt(stockData[4]);
                 newStock.setPlu(pluToInt);
 
 

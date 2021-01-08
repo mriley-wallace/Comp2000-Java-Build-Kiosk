@@ -41,10 +41,10 @@ public class kioskSplash extends JFrame {
                 tempAdmin.setPassword(txtPassword.getText());
 
                 try {
-                    for (int index = 0; index < admin.size(); index++) {
+                    for (com.adminUser adminUser : admin) {
 
-                        if (tempAdmin.getUsername().equals(admin.get(index).getUsername())
-                                && tempAdmin.getPassword().equals(admin.get(index).getPassword())) {
+                        if (tempAdmin.getUsername().equals(adminUser.getUsername())
+                                && tempAdmin.getPassword().equals(adminUser.getPassword())) {
 
                             setVisible(false);
                             kioskMainUI Page = new kioskMainUI();

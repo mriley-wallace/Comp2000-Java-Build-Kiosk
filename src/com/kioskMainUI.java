@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class kioskMainUI extends JFrame {
@@ -73,15 +72,17 @@ public class kioskMainUI extends JFrame {
                 findItem.stockLoad();
                 setArrayStock(findItem.getStock());
 
-                String tempNumber = txtItemScan.toString();
+                stockItems addedItem = new stockItems();
+                addedItem.setBarcode(Double.parseDouble(txtItemScan.getText()));
 
 
                 try {
-                    for (int index = 0; index < newTransaction.size(); index++) {
+                    for (com.stockItems stockItems : newTransaction) {
 
-                        if (tempNumber == (newTransaction.get(index).getBarcode()) || tempNumber == (newTransaction.get(index).getPlu())) {
+                        if (addedItem.getBarcode() == stockItems.getBarcode()
+                                || addedItem.getBarcode() == stockItems.getPlu()) {
 
-                        shoppingList.append(newTransaction.get(index).getName());
+                            shoppingList.append(stockItems.getName());
 
                             break;
 

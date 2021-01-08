@@ -4,8 +4,8 @@ public class stockItems {
     private String name;
     private float price;
     private int amount;
-    private String barcode;
-    private String plu;
+    private double barcode;
+    private int plu;
 
 
     public String getName(){
@@ -32,18 +32,18 @@ public class stockItems {
         this.amount = amount;
     }
 
-    public String getBarcode() {
+    public double getBarcode() {
         return barcode; };
 
-    public void setBarcode(String barcode){
+    public void setBarcode(double barcode){
         this.barcode = barcode;
     }
 
-    public String getPlu(){
+    public int getPlu(){
         return plu;
     }
 
-    public void setPlu(String plu){
+    public void setPlu(int plu){
         this.plu = plu;
     }
 }

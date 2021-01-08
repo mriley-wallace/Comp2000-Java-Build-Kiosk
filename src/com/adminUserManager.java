@@ -16,7 +16,7 @@ public class adminUserManager {
         return admin;
     }
 
-    private ArrayList<adminUser> admin = new ArrayList<adminUser>();
+    private final ArrayList<adminUser> admin = new ArrayList<adminUser>();
 
     public void adminLoad(){
 
