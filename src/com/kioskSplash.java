@@ -25,6 +25,7 @@ public class kioskSplash extends JFrame {
     setContentPane(mainPanel);
 
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocationRelativeTo(null);
 
     setPreferredSize(new Dimension(500, 500));
 

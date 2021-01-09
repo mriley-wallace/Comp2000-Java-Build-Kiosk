@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class kioskMainUI extends JFrame {
     private JPanel scannedItem;
@@ -18,11 +19,11 @@ public class kioskMainUI extends JFrame {
     private JPanel notUsed;
     private JTextArea shoppingList;
     private JTextArea receiptPrintOut;
-    private JTextArea activeTotalPrint;
     private JPanel mainUI;
     private JButton scanItem;
     private JTextField txtItemScan;
     private JButton btnAddStock;
+    private JLabel lblActiveTotalPrint;
 
     private ArrayList<stockItems> newTransaction = new ArrayList<>();
 
@@ -30,11 +31,21 @@ public class kioskMainUI extends JFrame {
         this.newTransaction = newTransaction;
     }
 
+    public float runningTotal = 0.00f;
+    public int moreThanOneItem = 0;
+    public String showShop;
+    public int currentIndexMultiple;
+
     public kioskMainUI() {
+        stockItemsManager findItem = new stockItemsManager();
+        findItem.stockLoad();
+        setArrayStock(findItem.getStock());
+        boolean[] multipleItem = new boolean[newTransaction.size()];
+        Arrays.fill(multipleItem, Boolean.FALSE);
         cashBtn.setEnabled(false);
         cardBtn.setEnabled(false);
         setContentPane(mainUI);
-
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setPreferredSize(new Dimension(500, 500));
@@ -68,31 +79,49 @@ public class kioskMainUI extends JFrame {
         btnAddStock.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                stockItemsManager findItem = new stockItemsManager();
-                findItem.stockLoad();
-                setArrayStock(findItem.getStock());
+
 
                 stockItems addedItem = new stockItems();
                 addedItem.setBarcode(Double.parseDouble(txtItemScan.getText()));
 
-
                 try {
-                    for (com.stockItems stockItems : newTransaction) {
+                    for (int currentIndex = 0; currentIndex < newTransaction.size(); currentIndex++) {
 
-                        if (addedItem.getBarcode() == stockItems.getBarcode()
-                                || addedItem.getBarcode() == stockItems.getPlu()) {
+                        if (addedItem.getBarcode() == newTransaction.get(currentIndex).getBarcode()
+                                || addedItem.getBarcode() == newTransaction.get(currentIndex).getPlu()) {
+                            if(multipleItem[currentIndex] == false){
+                                multipleItem[currentIndex] = true;
+                                moreThanOneItem = 1;
+                                float addTotal = newTransaction.get(currentIndex).getPrice();
+                                runningTotal = runningTotal + addTotal;
+                                String priceToString = String.format("%.02f", runningTotal);
+                                lblActiveTotalPrint.setText("£" + priceToString);
+                                showShop = moreThanOneItem + " " + newTransaction.get(currentIndex).getName() +
+                                        "......." + " £" + newTransaction.get(currentIndex).getPrice() + "\n";
+                                shoppingList.append(showShop);
 
-                            shoppingList.append(stockItems.getName());
-
-                            break;
+                            }else {
+                                moreThanOneItem += 1;
+                                shoppingList.replaceRange(String.valueOf(moreThanOneItem),0,1);
+                            }
 
                         } else {
                             System.out.println("No Stock Item Found");
                         }
+
                     }
+
                 } catch (Exception f){
                     f.printStackTrace();
                 }
+                txtItemScan.setText("");
+
+            }
+        });
+        databaseCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
