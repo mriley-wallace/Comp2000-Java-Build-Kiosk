@@ -25,11 +25,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.kioskMainUI">
+  <component name="RunManager" selected="Application.kioskSplash">
     <configuration name="kioskMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kioskMain" />
       <module name="Comp2000-Java-Build-Kiosk" />
@@ -71,9 +72,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.kioskMainUI" />
         <item itemvalue="Application.kioskSplash" />
         <item itemvalue="Application.kioskMain" />
+        <item itemvalue="Application.kioskMainUI" />
       </list>
     </recent_temporary>
   </component>
@@ -97,5 +98,10 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Comp2000_Java_Build_Kiosk$kioskMain.ic" NAME="kioskMain Coverage Results" MODIFIED="1610211369713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.*</FILTER>
+    </SUITE>
   </component>
 </project>
