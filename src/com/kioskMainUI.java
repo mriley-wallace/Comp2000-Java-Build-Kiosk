@@ -36,7 +36,7 @@ public class kioskMainUI extends JFrame {
     public float runningTotal = 0.00f;
     public int moreThanOneItem = 0;
     public String showShop;
-
+    public String addShop;
 
     public kioskMainUI() {
         stockItemsManager findItem = new stockItemsManager();
@@ -95,6 +95,8 @@ public class kioskMainUI extends JFrame {
                         if (addedItem.getBarcode() == newTransaction.get(currentIndex).getBarcode()
                                 || addedItem.getBarcode() == newTransaction.get(currentIndex).getPlu()) {
 
+                            shoppingList.setText("");
+
                             if(!multipleItem[currentIndex]){
                                 multipleItem[currentIndex] = true;
                                 moreThanOneItem = 1;
@@ -102,23 +104,29 @@ public class kioskMainUI extends JFrame {
                                 moreThanOneItem += 1;
                             }
 
+
                             int tempMore = newTransaction.get(currentIndex).getActive();
                             newTransaction.get(currentIndex).setActive(tempMore + 1);
 
+
+                            /*This is the logic behind the Running Total displayed in the bottom left corner*/
                             float addTotal = newTransaction.get(currentIndex).getPrice();
                             runningTotal = runningTotal + addTotal;
                             String priceToString = String.format("%.02f", runningTotal);
                             lblActiveTotalPrint.setText("£" + priceToString);
+                            /*----------------------------------------------------------------------------------*/
 
 
-                            priceToString = String.format("%.02f", newTransaction.get(currentIndex).getPrice()*moreThanOneItem );
-                            showShop = newTransaction.get(currentIndex).getActive() + " " + newTransaction.get(currentIndex).getName() +
-                                    "..... £" + priceToString + "\n";
+                            for(int i = 0; i < newTransaction.size(); i++) {
 
-
-
-
-
+                                    if(newTransaction.get(i).getActive() > 0) {
+                                        String newPriceString;
+                                        newPriceString = String.format("%.02f", newTransaction.get(i).getPrice()*newTransaction.get(i).getActive() );
+                                        addShop = newTransaction.get(i).getActive() + " " + newTransaction.get(i).getName() +
+                                                "..... £"  + newPriceString + "\n ";
+                                        shoppingList.append(addShop);
+                                    }
+                            }
                         } else {
                             System.out.println("No Stock Item Found");
                         }
@@ -128,6 +136,7 @@ public class kioskMainUI extends JFrame {
                 } catch (Exception f){
                     f.printStackTrace();
                 }
+
                 txtItemScan.setText("");
 
             }
