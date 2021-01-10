@@ -46,6 +46,9 @@ public class stockItemsManager {
                 int pluToInt = Integer.parseInt(stockData[4]);
                 newStock.setPlu(pluToInt);
 
+                int activeShopToInt = Integer.parseInt(stockData[5]);
+                newStock.setActive((activeShopToInt));
+
 
                 stock.add(newStock);
 
@@ -74,6 +77,7 @@ public class stockItemsManager {
                 int amountToInt = stock.get(index).getAmount();
                 double barcodeToDouble = stock.get(index).getBarcode();
                 int pluToInt = stock.get(index).getPlu();
+                int activeShopToInt = stock.get(index).getActive();
                 dataRow += "|" + priceToFloat + "|" + amountToInt + "|" + barcodeToDouble + "|" + pluToInt;
 
                 writer.write(dataRow);

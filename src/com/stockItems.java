@@ -6,6 +6,7 @@ public class stockItems {
     private int amount;
     private double barcode;
     private int plu;
+    private int active;
 
 
     public String getName(){
@@ -46,4 +47,8 @@ public class stockItems {
     public void setPlu(int plu){
         this.plu = plu;
     }
+
+    public int getActive(){ return active;}
+
+    public void setActive(int active){this.active = active;}
 }

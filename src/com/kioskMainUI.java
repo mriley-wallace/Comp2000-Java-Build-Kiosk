@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,6 +28,7 @@ public class kioskMainUI extends JFrame {
 
     private ArrayList<stockItems> newTransaction = new ArrayList<>();
 
+
     public void setArrayStock(ArrayList<stockItems> newTransaction){
         this.newTransaction = newTransaction;
     }
@@ -34,7 +36,7 @@ public class kioskMainUI extends JFrame {
     public float runningTotal = 0.00f;
     public int moreThanOneItem = 0;
     public String showShop;
-    public int currentIndexMultiple;
+
 
     public kioskMainUI() {
         stockItemsManager findItem = new stockItemsManager();
@@ -47,6 +49,8 @@ public class kioskMainUI extends JFrame {
         setContentPane(mainUI);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
 
         setPreferredSize(new Dimension(500, 500));
 
@@ -84,26 +88,36 @@ public class kioskMainUI extends JFrame {
                 stockItems addedItem = new stockItems();
                 addedItem.setBarcode(Double.parseDouble(txtItemScan.getText()));
 
+
                 try {
                     for (int currentIndex = 0; currentIndex < newTransaction.size(); currentIndex++) {
 
                         if (addedItem.getBarcode() == newTransaction.get(currentIndex).getBarcode()
                                 || addedItem.getBarcode() == newTransaction.get(currentIndex).getPlu()) {
-                            if(multipleItem[currentIndex] == false){
+
+                            if(!multipleItem[currentIndex]){
                                 multipleItem[currentIndex] = true;
                                 moreThanOneItem = 1;
-                                float addTotal = newTransaction.get(currentIndex).getPrice();
-                                runningTotal = runningTotal + addTotal;
-                                String priceToString = String.format("%.02f", runningTotal);
-                                lblActiveTotalPrint.setText("£" + priceToString);
-                                showShop = moreThanOneItem + " " + newTransaction.get(currentIndex).getName() +
-                                        "......." + " £" + newTransaction.get(currentIndex).getPrice() + "\n";
-                                shoppingList.append(showShop);
-
                             }else {
                                 moreThanOneItem += 1;
-                                shoppingList.replaceRange(String.valueOf(moreThanOneItem),0,1);
                             }
+
+                            int tempMore = newTransaction.get(currentIndex).getActive();
+                            newTransaction.get(currentIndex).setActive(tempMore + 1);
+
+                            float addTotal = newTransaction.get(currentIndex).getPrice();
+                            runningTotal = runningTotal + addTotal;
+                            String priceToString = String.format("%.02f", runningTotal);
+                            lblActiveTotalPrint.setText("£" + priceToString);
+
+
+                            priceToString = String.format("%.02f", newTransaction.get(currentIndex).getPrice()*moreThanOneItem );
+                            showShop = newTransaction.get(currentIndex).getActive() + " " + newTransaction.get(currentIndex).getName() +
+                                    "..... £" + priceToString + "\n";
+
+
+
+
 
                         } else {
                             System.out.println("No Stock Item Found");
