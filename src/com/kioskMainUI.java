@@ -6,9 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class kioskMainUI extends JFrame {
     private JPanel scannedItem;
@@ -131,7 +135,7 @@ public class kioskMainUI extends JFrame {
                                     JOptionPane.WARNING_MESSAGE);
                             break;
                         } else {
-                            addedItem.setBarcode(Double.parseDouble(txtItemScan.getText()));
+                            addedItem.setBarcode(Integer.parseInt(txtItemScan.getText()));
                         }
 
                         if (addedItem.getBarcode() == newTransaction.get(currentIndex).getBarcode()
@@ -202,6 +206,14 @@ public class kioskMainUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 scanItem.setVisible(false);
+                SwingWorkerLoader();
+                findItem.itemSave();
+                beginAnew();
+                for(int i = 0; i < newTransaction.size(); i++){
+                    newTransaction.get(i).setActive(0);
+                }
+                findItem.itemSave();
+
             }
         });
         btnEnterAmount.addActionListener(new ActionListener() {
@@ -219,6 +231,7 @@ public class kioskMainUI extends JFrame {
                 ChangeToGive(Float.parseFloat(priceToString));
                 beginAnew();
                 }
+                findItem.itemSave();
             }
         });
         btnExactAmount.addActionListener(new ActionListener() {
@@ -226,6 +239,7 @@ public class kioskMainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ChangeToGive(runningTotal);
                 beginAnew();
+                findItem.itemSave();
             }
         });
         btnClosestNote.addActionListener(new ActionListener() {
@@ -233,6 +247,7 @@ public class kioskMainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ChangeToGive(closestChange);
                 beginAnew();
+                findItem.itemSave();
             }
         });
     }
@@ -282,5 +297,36 @@ public class kioskMainUI extends JFrame {
         for (com.stockItems stockItems : newTransaction) {
             stockItems.setActive(0);
         }
+
+    }
+
+    void SwingWorkerLoader(){
+        receiptPanel.setText("Loading Data...");
+
+        new SwingWorker<Object, Object>(){
+
+            @Override
+            protected Object doInBackground() throws Exception {
+             System.out.println("Swing Worker Thread:" + Thread.currentThread().getName());
+             for (int i = 0; i < newTransaction.size(); i++){
+                 new Date();
+             }
+             File file = new File("resources\\database.txt");
+             BufferedReader reader;
+             try {
+                    reader = new BufferedReader(new FileReader(file));
+                    String text;
+                    String savetext = "";
+
+                    while((text = reader.readLine()) != null){
+                        savetext += text + "\n";
+                    }
+                    receiptPanel.setText(savetext);
+             } catch (IOException e){
+                 e.printStackTrace();
+             }
+                return null;
+            }
+        }.execute();
     }
 }

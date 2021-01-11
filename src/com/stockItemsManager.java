@@ -40,11 +40,11 @@ public class stockItemsManager {
                 float priceToFloat = Float.parseFloat(stockData[2]);
                 newStock.setPrice(priceToFloat);
 
-                double barcodeToDouble = Double.parseDouble(stockData[3]);
-                newStock.setBarcode(barcodeToDouble);
+                long barcodeToLong = Long.parseLong(stockData[3]);
+                newStock.setBarcode(barcodeToLong);
 
-                int pluToInt = Integer.parseInt(stockData[4]);
-                newStock.setPlu(pluToInt);
+                int pluToLong = Integer.parseInt(stockData[4]);
+                newStock.setPlu(pluToLong);
 
                 int activeShopToInt = Integer.parseInt(stockData[5]);
                 newStock.setActive((activeShopToInt));
@@ -75,10 +75,10 @@ public class stockItemsManager {
                 dataRow += stock.get(index).getName();
                 float priceToFloat = stock.get(index).getPrice();
                 int amountToInt = stock.get(index).getAmount();
-                double barcodeToDouble = stock.get(index).getBarcode();
+                long barcodeToLong = stock.get(index).getBarcode();
                 int pluToInt = stock.get(index).getPlu();
                 int activeShopToInt = stock.get(index).getActive();
-                dataRow += "|" + priceToFloat + "|" + amountToInt + "|" + barcodeToDouble + "|" + pluToInt;
+                dataRow += "|" + amountToInt + "|" + priceToFloat + "|" + barcodeToLong + "|" + pluToInt + "|" + activeShopToInt;
 
                 writer.write(dataRow);
             }

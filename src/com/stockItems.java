@@ -4,7 +4,7 @@ public class stockItems {
     private String name;
     private float price;
     private int amount;
-    private double barcode;
+    private long barcode;
     private int plu;
     private int active;
 
@@ -33,10 +33,10 @@ public class stockItems {
         this.amount = amount;
     }
 
-    public double getBarcode() {
+    public long getBarcode() {
         return barcode; };
 
-    public void setBarcode(double barcode){
+    public void setBarcode(long barcode){
         this.barcode = barcode;
     }
 
