@@ -23,45 +23,50 @@ public class adminSplash extends JFrame {
 
     public adminSplash(){
     setContentPane(mainPanel);
-
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
     setPreferredSize(new Dimension(800, 800));
 
+    adminUserManager staffLogin = new adminUserManager();
+    staffLogin.adminLoad();
+    setArrayAdmin(staffLogin.getUsers());
+
     pack();
-        setLocationRelativeTo(null);
+    setLocationRelativeTo(null);
+
         beginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                adminUserManager staffLogin = new adminUserManager();
-                staffLogin.adminLoad();
-                setArrayAdmin(staffLogin.getUsers());
 
+                boolean errorCatch = false;
                 adminUser tempAdmin = new adminUser();
                 tempAdmin.setUsername(txtUsername.getText());
                 tempAdmin.setPassword(txtPassword.getText());
 
-                try {
+      /*          try {*/
                     for (com.adminUser adminUser : admin) {
-
                         if (tempAdmin.getUsername().equals(adminUser.getUsername())
                                 && tempAdmin.getPassword().equals(adminUser.getPassword())) {
-
+                            txtUsername.setText("");
+                            txtPassword.setText("");
                             setVisible(false);
                             stockAdminUI Page = new stockAdminUI();
                             Page.setVisible(true);
-                        } else {
-                            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
-                                    "You did not enter the correct credentials.",
-                                    "No Admin Found",
-                                    JOptionPane.WARNING_MESSAGE);
-                            System.out.println("No Admin User Found // Credentials Incorrect");
+                            errorCatch = false;
+                            break;
                         }
-                        break;
+                        errorCatch = true;
                     }
-                } catch (Exception f){
+
+
+                /*} catch (Exception f){
                     f.printStackTrace();
+                }*/
+                if (errorCatch){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                            "You did not enter the correct credentials.",
+                            "No Admin Found",
+                            JOptionPane.WARNING_MESSAGE);
+                    System.out.println("No Admin User Found // Credentials Incorrect");
                 }
             }
         });

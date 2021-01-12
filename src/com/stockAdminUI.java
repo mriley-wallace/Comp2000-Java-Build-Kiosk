@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class stockAdminUI extends JFrame{
     private JButton btnAdd;
@@ -34,7 +35,8 @@ public class stockAdminUI extends JFrame{
 
     public stockAdminUI() {
 
-
+        String[] empty = new String[4];
+        Arrays.fill(empty, "");
         btnAdd.setVisible(false);
         btnEdit.setVisible(false);
         btnDelete.setVisible(false);
@@ -52,19 +54,16 @@ public class stockAdminUI extends JFrame{
         setPreferredSize(new Dimension(800, 800));
         pack();
         setLocationRelativeTo(null);
-
-
-
         btnAdminDB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 comboBox1.removeAllItems();
                 btnAdd.setVisible(true);
-                btnEdit.setVisible(false);
+                btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
                 btnOrderStock.setEnabled(false);
                 comboBox1.setEnabled(false);
-                String[] col = {"Username","Password"};
+                String[] col = {"Username", "Password"};
                 DefaultTableModel adminModel = new DefaultTableModel(col, 0);
 
                 tableLoadingDB.setModel(adminModel);
@@ -80,10 +79,46 @@ public class stockAdminUI extends JFrame{
 
                 btnAdd.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed (ActionEvent e){
-                        btnEdit.setVisible(true);
+                    public void actionPerformed(ActionEvent e) {
                         String[] emptyRow = {""};
                         adminModel.addRow(emptyRow);
+                        admin.add(new adminUser());
+                    }
+                });
+
+                btnEdit.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        for (int i = 1; i < adminModel.getRowCount(); i++) {
+                            if (adminModel.getValueAt(i, 0) == null) {
+                                break;
+                            } else {
+                                admin.get(i-1).setUsername(String.valueOf(adminModel.getValueAt(i, 0)));
+                                admin.get(i-1).setPassword(String.valueOf(adminModel.getValueAt(i, 1)));
+                            }
+                            staffLogin.adminSave();
+                        }
+                        setVisible(false);
+                        stockAdminUI Page = new stockAdminUI();
+                        Page.setVisible(true);
+                    }
+                });
+                btnDelete.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(tableLoadingDB.getSelectedRow() < 0){
+                            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                                    "You did not select an admin for deletion.",
+                                    "No Admin Selected.",
+                                    JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            int deleteDB = tableLoadingDB.getSelectedRow() -1;
+                            admin.remove(deleteDB);
+                        }
+                        staffLogin.adminSave();
+                        setVisible(false);
+                        stockAdminUI Page = new stockAdminUI();
+                        Page.setVisible(true);
                     }
                 });
             }
@@ -96,11 +131,11 @@ public class stockAdminUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 comboBox1.removeAllItems();
                 btnAdd.setVisible(true);
-                btnEdit.setVisible(false);
+                btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
                 btnOrderStock.setEnabled(true);
                 comboBox1.setEnabled(true);
-                String[] col = {"Stock Name","Stock Amount","Stock Price", "Stock Barcode", "Stock PLU"};
+                String[] col = {"Stock Name", "Stock Amount", "Stock Price", "Stock Barcode", "Stock PLU"};
                 DefaultTableModel stockModel = new DefaultTableModel(col, 0);
 
                 tableLoadingDB.setModel(stockModel);
@@ -120,11 +155,14 @@ public class stockAdminUI extends JFrame{
                 }
 
                 btnAdd.addActionListener(new ActionListener() {
+
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         btnEdit.setVisible(true);
                         String[] emptyRow = {""};
                         stockModel.addRow(emptyRow);
+                        newTransaction.add(new stockItems());
+
                     }
                 });
 
@@ -157,6 +195,50 @@ public class stockAdminUI extends JFrame{
                         }
                     }
                 });
+                btnEdit.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+
+                        for (int i = 1; i < stockModel.getRowCount(); i++) {
+
+                            if (stockModel.getValueAt(i, 0) == null) {
+                                break;
+                            } else {
+                                newTransaction.get(i - 1).setName(String.valueOf(stockModel.getValueAt(i, 0)));
+                                newTransaction.get(i - 1).setAmount(Integer.parseInt(String.valueOf(stockModel.getValueAt(i, 1))));
+                                newTransaction.get(i - 1).setPrice(Float.parseFloat(String.valueOf(stockModel.getValueAt(i, 2))));
+                                newTransaction.get(i - 1).setBarcode(Long.parseLong(String.valueOf(stockModel.getValueAt(i, 3))));
+                                newTransaction.get(i - 1).setPlu(Integer.parseInt(String.valueOf(stockModel.getValueAt(i, 4))));
+                                newTransaction.get(i - 1).setActive(0);
+                            }
+                            findItem.itemSave();
+                        }
+                        setVisible(false);
+                        stockAdminUI Page = new stockAdminUI();
+                        Page.setVisible(true);
+                    }
+                });
+                btnDelete.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(tableLoadingDB.getSelectedRow() < 0){
+                            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                                    "You did not select an admin for deletion.",
+                                    "No Admin Selected.",
+                                    JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            int deleteDB = tableLoadingDB.getSelectedRow() -1;
+                            newTransaction.remove(deleteDB);
+                        }
+                        findItem.itemSave();
+                        setVisible(false);
+                        stockAdminUI Page = new stockAdminUI();
+                        Page.setVisible(true);
+                    }
+
+                });
             }
         });
         btnBackToShop.addActionListener(new ActionListener() {
@@ -165,16 +247,16 @@ public class stockAdminUI extends JFrame{
                 setVisible(false);
                 kioskMainUI Page = new kioskMainUI();
                 Page.setVisible(true);
-
             }
         });
 
-
-
     }
+
+
 
     public static void main(String[] args) {
         stockAdminUI Page = new stockAdminUI();
         Page.setVisible(true);
     }
 }
+

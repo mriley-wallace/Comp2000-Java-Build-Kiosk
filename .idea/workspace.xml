@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="AutomatedKiosk" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a0b7146d-7619-4a36-b8a7-616920c5e54f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,6 +16,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -31,17 +37,28 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/resources" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="1" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="257" />
     <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.24506749" />
   </component>
-  <component name="RunManager" selected="Application.stockAdminUI">
-    <configuration name="adminSplash" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\midge\Documents\GitHub\Comp2000-Java-Build-Kiosk" />
+      <recent name="C:\Users\midge\Documents\GitHub\Comp2000-Java-Build-Kiosk\src\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.kioskSplash">
+    <configuration name="adminSplash" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.adminSplash" />
       <module name="Comp2000-Java-Build-Kiosk" />
       <extension name="coverage">
@@ -80,7 +97,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="kioskSplash" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="kioskSplash" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kioskSplash" />
       <module name="Comp2000-Java-Build-Kiosk" />
       <extension name="coverage">
@@ -93,7 +110,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="stockAdminUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="stockAdminUI" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.stockAdminUI" />
       <module name="Comp2000-Java-Build-Kiosk" />
       <extension name="coverage">
@@ -117,16 +134,13 @@
     <list>
       <item itemvalue="Application.kioskMainUI" />
       <item itemvalue="Application.adminSplash" />
-      <item itemvalue="Application.kioskMain" />
-      <item itemvalue="Compound.Unnamed" />
       <item itemvalue="Application.kioskSplash" />
       <item itemvalue="Application.stockAdminUI" />
+      <item itemvalue="Application.kioskMain" />
+      <item itemvalue="Compound.Unnamed" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.stockAdminUI" />
-        <item itemvalue="Application.kioskSplash" />
-        <item itemvalue="Application.adminSplash" />
         <item itemvalue="Application.kioskMain" />
       </list>
     </recent_temporary>
@@ -152,6 +166,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -159,6 +174,14 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="13" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

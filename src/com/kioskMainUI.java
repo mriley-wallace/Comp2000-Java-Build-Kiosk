@@ -240,11 +240,7 @@ public class kioskMainUI extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        kioskMainUI Page = new kioskMainUI();
-        Page.setVisible(true);
 
-    }
 
     public void CashPaymentReset() {
         btnClosestNote.setVisible(false);
@@ -346,8 +342,8 @@ public class kioskMainUI extends JFrame {
     }
 
     public void resetActiveEnd(){
-        for (int i = 0; i < newTransaction.size(); i++) {
-            newTransaction.get(i).setActive(0);
+        for (com.stockItems stockItems : newTransaction) {
+            stockItems.setActive(0);
         }
     }
 }
