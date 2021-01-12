@@ -282,9 +282,7 @@ public class kioskMainUI extends JFrame {
         for (com.stockItems stockItems : newTransaction) {
             stockItems.setActive(0);
         }
-
     }
-
     void SwingWorkerLoaderCash() {
 
 
