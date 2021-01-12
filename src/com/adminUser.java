@@ -3,7 +3,6 @@ package com;
 public class adminUser {
     private String username;
     private String password;
-    private boolean isHigherAdmin;
 
 
     public String getUsername() {
@@ -22,11 +21,4 @@ public class adminUser {
         this.password = password;
     }
 
-    public boolean isHigherAdmin(){
-        return isHigherAdmin;
-    }
-
-    public void setHigherAdmin(boolean higherAdmin){
-        isHigherAdmin = higherAdmin;
-    }
 }

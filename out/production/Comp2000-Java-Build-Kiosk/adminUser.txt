@@ -1,2 +1,2 @@
-testadmin|1234|false
-highboy|9999|true
+testadmin|1234
+highboy|9999

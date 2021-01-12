@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class adminUserManager {
-
+    public static String companyName = "Michael's Automated Checkout";
+    public static String companyDetails = "Store 001 " + "\n" + "Contact Number: 07557767300";
     public String filePath = "resources\\adminUser.txt";
     public String separator = "\\|";
 
@@ -35,9 +36,6 @@ public class adminUserManager {
 
                 String password = adminData[1];
                 newAdmin.setPassword(password);
-
-                boolean higherToBoolean = Boolean.parseBoolean(adminData[2]);
-                newAdmin.setHigherAdmin(higherToBoolean);
 
                 admin.add(newAdmin);
 

@@ -1,15 +1,9 @@
 package com;
 
-import javafx.scene.control.TextFormatter;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,13 +31,14 @@ public class kioskMainUI extends JFrame {
     private JLabel lblChange;
     private JLabel lblGivenChange;
     private JTextArea receiptPanel;
+    private JLabel lblCurrency;
 
     private ArrayList<stockItems> newTransaction = new ArrayList<>();
 
-
-    public void setArrayStock(ArrayList<stockItems> newTransaction){
+    public void setArrayStock(ArrayList<stockItems> newTransaction) {
         this.newTransaction = newTransaction;
     }
+
 
     public static float runningTotal = 0.00f;
     public static int moreThanOneItem = 0;
@@ -52,13 +47,11 @@ public class kioskMainUI extends JFrame {
 
 
     public kioskMainUI() {
-
+        lblCurrency.setVisible(false);
 
         stockItemsManager findItem = new stockItemsManager();
         findItem.stockLoad();
         setArrayStock(findItem.getStock());
-        boolean[] multipleItem = new boolean[newTransaction.size()];
-        Arrays.fill(multipleItem, Boolean.FALSE);
         cashBtn.setVisible(false);
         cardBtn.setVisible(false);
         setContentPane(mainUI);
@@ -81,14 +74,14 @@ public class kioskMainUI extends JFrame {
                 String runningToString = String.format("%.02f", runningTotal);
                 btnExactAmount.setText("£" + runningToString);
 
-                while(closestChange < runningTotal){
-                closestChange += 5.00f;
+                while (closestChange < runningTotal) {
+                    closestChange += 5.00f;
                 }
                 String closestToString = String.format("%.02f", closestChange);
-                    btnClosestNote.setText("£" + closestToString);
+                btnClosestNote.setText("£" + closestToString);
 
-                    cashBtn.setVisible(false);
-                    cardBtn.setVisible(false);
+                cashBtn.setVisible(false);
+                cardBtn.setVisible(false);
             }
 
         });
@@ -106,6 +99,7 @@ public class kioskMainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 lblChange.setText("");
                 lblGivenChange.setText("");
+                lblCurrency.setVisible(false);
                 cashBtn.setVisible(false);
                 cardBtn.setVisible(false);
                 txtItemScan.setEnabled(true);
@@ -114,28 +108,24 @@ public class kioskMainUI extends JFrame {
                 btnAddStock.setVisible(true);
                 CashPaymentReset();
                 txtEnteredAmount.setVisible(false);
+                receiptPanel.setText("");
             }
         });
         btnAddStock.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 stockItems addedItem = new stockItems();
-
-
-
                 try {
                     for (int currentIndex = 0; currentIndex < newTransaction.size(); currentIndex++) {
 
-                        if(txtItemScan.getText().equals("")) {
+                        if (txtItemScan.getText().equals("")) {
                             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                                     "You did not enter a product.",
                                     "No Item Found",
                                     JOptionPane.WARNING_MESSAGE);
                             break;
                         } else {
-                            addedItem.setBarcode(Integer.parseInt(txtItemScan.getText()));
+                            addedItem.setBarcode(Long.parseLong(txtItemScan.getText()));
                         }
 
                         if (addedItem.getBarcode() == newTransaction.get(currentIndex).getBarcode()
@@ -143,18 +133,11 @@ public class kioskMainUI extends JFrame {
 
                             shoppingList.setText("");
 
-                            if (!multipleItem[currentIndex]) {
-                                multipleItem[currentIndex] = true;
-                                moreThanOneItem = 1;
-                            } else {
-                                moreThanOneItem += 1;
-                            }
-
-                            if (newTransaction.get(currentIndex).getAmount() > 0){
+                            if (newTransaction.get(currentIndex).getAmount() > 0) {
                                 newTransaction.get(currentIndex).setAmount(newTransaction.get(currentIndex).getAmount() - 1);
                             } else {
                                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
-                                        "We do not have enough stock",
+                                        "We do not have any more stock",
                                         "Not Enough Items",
                                         JOptionPane.WARNING_MESSAGE);
                                 newTransaction.get(currentIndex).setActive(newTransaction.get(currentIndex).getActive() - 1);
@@ -188,7 +171,7 @@ public class kioskMainUI extends JFrame {
 
                     }
 
-                } catch (Exception f){
+                } catch (Exception f) {
                     f.printStackTrace();
                 }
 
@@ -199,19 +182,19 @@ public class kioskMainUI extends JFrame {
         databaseCheck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                setVisible(false);
+                adminSplash Page = new adminSplash();
+                Page.setVisible(true);
             }
         });
         cardBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 scanItem.setVisible(false);
-                SwingWorkerLoader();
+                SwingWorkerLoaderCard();
                 findItem.itemSave();
                 beginAnew();
-                for(int i = 0; i < newTransaction.size(); i++){
-                    newTransaction.get(i).setActive(0);
-                }
+                resetActiveEnd();
                 findItem.itemSave();
 
             }
@@ -224,14 +207,16 @@ public class kioskMainUI extends JFrame {
                             "You did not enter an amount",
                             "No Amount Specified",
                             JOptionPane.WARNING_MESSAGE);
-                } else{
+                } else {
                     float enterAmount;
-                enterAmount = Float.parseFloat(String.valueOf(txtEnteredAmount.getText()));
-                String priceToString = String.format("%.02f", enterAmount);
-                ChangeToGive(Float.parseFloat(priceToString));
-                beginAnew();
+                    enterAmount = Float.parseFloat(String.valueOf(txtEnteredAmount.getText()));
+                    String priceToString = String.format("%.02f", enterAmount);
+                    ChangeToGive(Float.parseFloat(priceToString));
+                    beginAnew();
                 }
                 findItem.itemSave();
+                SwingWorkerLoaderCash();
+                resetActiveEnd();
             }
         });
         btnExactAmount.addActionListener(new ActionListener() {
@@ -240,6 +225,8 @@ public class kioskMainUI extends JFrame {
                 ChangeToGive(runningTotal);
                 beginAnew();
                 findItem.itemSave();
+                SwingWorkerLoaderCash();
+                resetActiveEnd();
             }
         });
         btnClosestNote.addActionListener(new ActionListener() {
@@ -248,9 +235,12 @@ public class kioskMainUI extends JFrame {
                 ChangeToGive(closestChange);
                 beginAnew();
                 findItem.itemSave();
+                SwingWorkerLoaderCash();
+                resetActiveEnd();
             }
         });
     }
+
     public static void main(String[] args) {
         kioskMainUI Page = new kioskMainUI();
         Page.setVisible(true);
@@ -263,18 +253,19 @@ public class kioskMainUI extends JFrame {
         btnExactAmount.setVisible(false);
     }
 
-    public void CashPaymentActive(){
+    public void CashPaymentActive() {
         btnClosestNote.setVisible(true);
         btnEnterAmount.setVisible(true);
         btnExactAmount.setVisible(true);
     }
 
-    public void ChangeToGive(float button){
+    public void ChangeToGive(float button) {
         lblChange.setText("Change:");
-        lblGivenChange.setText("£" + String.format("%.02f", button - runningTotal));
+        lblCurrency.setVisible(true);
+        lblGivenChange.setText(String.format("%.02f", button - runningTotal));
     }
 
-    public void endPayment(){
+    public void endPayment() {
         cashBtn.setVisible(true);
         cardBtn.setVisible(true);
         txtItemScan.setEnabled(false);
@@ -284,14 +275,13 @@ public class kioskMainUI extends JFrame {
         scanItem.setVisible(true);
         txtItemScan.setVisible(false);
         btnAddStock.setVisible(false);
+
     }
 
-    public void beginAnew(){
+    public void beginAnew() {
         endPayment();
-        shoppingList.setText("");
         cashBtn.setVisible(false);
         cardBtn.setVisible(false);
-        runningTotal = 0.00f;
         lblActiveTotalPrint.setText("£0.00");
 
         for (com.stockItems stockItems : newTransaction) {
@@ -300,33 +290,68 @@ public class kioskMainUI extends JFrame {
 
     }
 
-    void SwingWorkerLoader(){
-        receiptPanel.setText("Loading Data...");
+    void SwingWorkerLoaderCash() {
 
-        new SwingWorker<Object, Object>(){
 
+        new SwingWorker<Void, Object>() {
+            String receiptString;
+            final float cashTotal = Float.parseFloat(lblGivenChange.getText()) + runningTotal;
+            final String cashTotalToString = String.format("%.02f", cashTotal);
+            final String runningTotalFormat = String.format("%.02f", runningTotal);
             @Override
-            protected Object doInBackground() throws Exception {
-             System.out.println("Swing Worker Thread:" + Thread.currentThread().getName());
-             for (int i = 0; i < newTransaction.size(); i++){
-                 new Date();
-             }
-             File file = new File("resources\\database.txt");
-             BufferedReader reader;
-             try {
-                    reader = new BufferedReader(new FileReader(file));
-                    String text;
-                    String savetext = "";
+            protected Void doInBackground() throws Exception {
+                System.out.println("Swing Worker Thread:" + Thread.currentThread().getName());
+                receiptPanel.setText("Printing Receipt");
 
-                    while((text = reader.readLine()) != null){
-                        savetext += text + "\n";
-                    }
-                    receiptPanel.setText(savetext);
-             } catch (IOException e){
-                 e.printStackTrace();
-             }
+                for (int i = 0; i < 999999999; i++) {
+                    new Date();
+                }
+                        receiptString = adminUserManager.companyName + "\n" + "\n" + adminUserManager.companyDetails + "\n" + "------------------" + "\n" + "\n"
+                                + shoppingList.getText() + "\n" + "\n" + "\n" + "\n" + "------------------" + "\n" + "Total Today: £" + runningTotalFormat + "\n"
+                                + "\n" + "Cash Payment of: £" + cashTotalToString + "\n" + "\n" + "Change given: £" + lblGivenChange.getText();
+                receiptPanel.setText(receiptString);
+
+                shoppingList.setText("");
+                runningTotal = 0.00f;
                 return null;
             }
         }.execute();
+
+    }
+
+    void SwingWorkerLoaderCard() {
+
+
+        new SwingWorker<Void, Object>() {
+            String receiptString;
+            final String runningTotalFormat = String.format("%.02f", runningTotal);
+            @Override
+            protected Void doInBackground() throws Exception {
+                System.out.println("Swing Worker Thread:" + Thread.currentThread().getName());
+                receiptPanel.setText("Printing Receipt");
+
+                for (int i = 0; i < 999999999; i++) {
+                    new Date();
+                }
+                    receiptString = adminUserManager.companyName + "\n" + "\n" + adminUserManager.companyDetails + "\n" + "------------------" + "\n" + "\n" + shoppingList.getText()
+                            + "\n" + "\n" + "\n" + "\n" + "------------------" + "\n" + "Total Today: £" + runningTotalFormat + "\n" + "\n" + "\n" + "Verified by card for amount: £" + runningTotalFormat;
+
+                receiptPanel.setText(receiptString);
+
+                shoppingList.setText("");
+                runningTotal = 0.00f;
+                return null;
+            }
+        }.execute();
+
+    }
+
+    public void resetActiveEnd(){
+        for (int i = 0; i < newTransaction.size(); i++) {
+            newTransaction.get(i).setActive(0);
+        }
     }
 }
+
+
+
