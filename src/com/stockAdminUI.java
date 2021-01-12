@@ -14,7 +14,7 @@ public class stockAdminUI extends JFrame{
     private JButton btnDelete;
     private JButton btnStockDB;
     private JButton btnOrderStock;
-    private JComboBox comboBox1;
+    private JComboBox<String> comboBox1;
     private JTable tableDatabaseLoad;
     private JPanel mainPanel;
     private JTable tableLoadingDB;
@@ -32,9 +32,8 @@ public class stockAdminUI extends JFrame{
         this.admin = admin;
     }
 
-
-
     public stockAdminUI() {
+
 
         btnAdd.setVisible(false);
         btnEdit.setVisible(false);
@@ -61,9 +60,11 @@ public class stockAdminUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 comboBox1.removeAllItems();
                 btnAdd.setVisible(true);
-                btnEdit.setVisible(true);
+                btnEdit.setVisible(false);
                 btnDelete.setVisible(true);
-                String col[] = {"Username","Password"};
+                btnOrderStock.setEnabled(false);
+                comboBox1.setEnabled(false);
+                String[] col = {"Username","Password"};
                 DefaultTableModel adminModel = new DefaultTableModel(col, 0);
 
                 tableLoadingDB.setModel(adminModel);
@@ -71,18 +72,17 @@ public class stockAdminUI extends JFrame{
                 adminModel.addRow(col);
 
 
+                for (com.adminUser adminUser : admin) {
 
-
-                for(int i = 0; i < admin.size(); i++){
-
-                    Object[] nameToArray = {admin.get(i).getUsername(), admin.get(i).getPassword()};
+                    Object[] nameToArray = {adminUser.getUsername(), adminUser.getPassword()};
                     adminModel.addRow(nameToArray);
                 }
 
                 btnAdd.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed (ActionEvent e){
-                        String emptyRow[] = {""};
+                        btnEdit.setVisible(true);
+                        String[] emptyRow = {""};
                         adminModel.addRow(emptyRow);
                     }
                 });
@@ -96,9 +96,11 @@ public class stockAdminUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 comboBox1.removeAllItems();
                 btnAdd.setVisible(true);
-                btnEdit.setVisible(true);
+                btnEdit.setVisible(false);
                 btnDelete.setVisible(true);
-                String col[] = {"Stock Name","Stock Amount","Stock Price", "Stock Barcode", "Stock PLU"};
+                btnOrderStock.setEnabled(true);
+                comboBox1.setEnabled(true);
+                String[] col = {"Stock Name","Stock Amount","Stock Price", "Stock Barcode", "Stock PLU"};
                 DefaultTableModel stockModel = new DefaultTableModel(col, 0);
 
                 tableLoadingDB.setModel(stockModel);
@@ -106,23 +108,53 @@ public class stockAdminUI extends JFrame{
                 stockModel.addRow(col);
 
 
+                for (com.stockItems stockItems : newTransaction) {
 
-
-                for(int i = 0; i < newTransaction.size(); i++){
-
-                    Object[] nameToArray = {newTransaction.get(i).getName(), newTransaction.get(i).getAmount(),
-                            newTransaction.get(i).getPrice(), newTransaction.get(i).getBarcode(), newTransaction.get(i).getPlu()};
+                    Object[] nameToArray = {stockItems.getName(), stockItems.getAmount(),
+                            stockItems.getPrice(), stockItems.getBarcode(), stockItems.getPlu()};
                     stockModel.addRow(nameToArray);
-                            if(newTransaction.get(i).getAmount() < 100){
-                                comboBox1.addItem(newTransaction.get(i).getName());
-                            }
+                    if (stockItems.getAmount() < 100) {
+                        comboBox1.addItem(stockItems.getName());
+                    }
 
                 }
+
                 btnAdd.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String emptyRow[] = {""};
+                        btnEdit.setVisible(true);
+                        String[] emptyRow = {""};
                         stockModel.addRow(emptyRow);
+                    }
+                });
+
+                btnOrderStock.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        if (!comboBox1.isEnabled()) {
+                            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                                    "There is no item currently low on stock. No order made.",
+                                    "Stock Levels OK",
+                                    JOptionPane.WARNING_MESSAGE);
+
+                        } else {
+                            String orderedItem = String.valueOf(comboBox1.getSelectedItem());
+                            int index = comboBox1.getSelectedIndex();
+                            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                                    "We have ordered the item: " + orderedItem + "\n" + "Check your deliveries tomorrow.",
+                                    "Items Successfully Ordered",
+                                    JOptionPane.WARNING_MESSAGE);
+                            comboBox1.removeItemAt(index);
+                            if (comboBox1.getSelectedItem() != null) {
+                                comboBox1.setSelectedIndex(0);
+                            } else {
+                                comboBox1.setEnabled(false);
+                            }
+
+
+                        }
                     }
                 });
             }
