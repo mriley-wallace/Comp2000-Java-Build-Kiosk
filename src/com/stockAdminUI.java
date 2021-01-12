@@ -18,6 +18,7 @@ public class stockAdminUI extends JFrame{
     private JTable tableDatabaseLoad;
     private JPanel mainPanel;
     private JTable tableLoadingDB;
+    private JButton btnBackToShop;
     private JTextArea txtLoadDB;
 
     private ArrayList<stockItems> newTransaction = new ArrayList<>();
@@ -34,6 +35,7 @@ public class stockAdminUI extends JFrame{
 
 
     public stockAdminUI() {
+
         btnAdd.setVisible(false);
         btnEdit.setVisible(false);
         btnDelete.setVisible(false);
@@ -57,14 +59,16 @@ public class stockAdminUI extends JFrame{
         btnAdminDB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                comboBox1.removeAllItems();
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
                 String col[] = {"Username","Password"};
+                DefaultTableModel adminModel = new DefaultTableModel(col, 0);
 
-                DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-
-                tableLoadingDB.setModel(tableModel);
+                tableLoadingDB.setModel(adminModel);
+                adminModel.getDataVector().removeAllElements();
+                adminModel.addRow(col);
 
 
 
@@ -72,26 +76,34 @@ public class stockAdminUI extends JFrame{
                 for(int i = 0; i < admin.size(); i++){
 
                     Object[] nameToArray = {admin.get(i).getUsername(), admin.get(i).getPassword()};
-                    tableModel.addRow(nameToArray);
+                    adminModel.addRow(nameToArray);
                 }
 
-
+                btnAdd.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed (ActionEvent e){
+                        String emptyRow[] = {""};
+                        adminModel.addRow(emptyRow);
+                    }
+                });
             }
+
         });
 
 
         btnStockDB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*txtLoadDB.setText("");*/
+                comboBox1.removeAllItems();
                 btnAdd.setVisible(true);
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
                 String col[] = {"Stock Name","Stock Amount","Stock Price", "Stock Barcode", "Stock PLU"};
+                DefaultTableModel stockModel = new DefaultTableModel(col, 0);
 
-                DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-
-                tableLoadingDB.setModel(tableModel);
+                tableLoadingDB.setModel(stockModel);
+                stockModel.getDataVector().removeAllElements();
+                stockModel.addRow(col);
 
 
 
@@ -100,12 +112,33 @@ public class stockAdminUI extends JFrame{
 
                     Object[] nameToArray = {newTransaction.get(i).getName(), newTransaction.get(i).getAmount(),
                             newTransaction.get(i).getPrice(), newTransaction.get(i).getBarcode(), newTransaction.get(i).getPlu()};
-                    tableModel.addRow(nameToArray);
-
+                    stockModel.addRow(nameToArray);
+                            if(newTransaction.get(i).getAmount() < 100){
+                                comboBox1.addItem(newTransaction.get(i).getName());
+                            }
 
                 }
+                btnAdd.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String emptyRow[] = {""};
+                        stockModel.addRow(emptyRow);
+                    }
+                });
             }
         });
+        btnBackToShop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                kioskMainUI Page = new kioskMainUI();
+                Page.setVisible(true);
+
+            }
+        });
+
+
+
     }
 
     public static void main(String[] args) {

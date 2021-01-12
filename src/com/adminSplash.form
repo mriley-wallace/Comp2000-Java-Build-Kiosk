@@ -16,7 +16,7 @@
         </constraints>
         <properties>
           <font size="22"/>
-          <text value="Begin"/>
+          <text value="Login"/>
         </properties>
       </component>
       <component id="68747" class="javax.swing.JTextField" binding="txtUsername">

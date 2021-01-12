@@ -183,8 +183,8 @@ public class kioskMainUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                adminSplash Page = new adminSplash();
-                Page.setVisible(true);
+                adminSplash admin = new adminSplash();
+                admin.setVisible(true);
             }
         });
         cardBtn.addActionListener(new ActionListener() {
@@ -192,7 +192,6 @@ public class kioskMainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 scanItem.setVisible(false);
                 SwingWorkerLoaderCard();
-                findItem.itemSave();
                 beginAnew();
                 resetActiveEnd();
                 findItem.itemSave();
