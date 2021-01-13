@@ -15,6 +15,7 @@ public class kioskSplash extends JFrame {
         JLabel thumb = new JLabel();
         thumb.setIcon(icon);
 
+        // Setting up the window with my parent JPanel, initiate its close parameters to close the application, and set the size//
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(800, 820));
@@ -22,6 +23,7 @@ public class kioskSplash extends JFrame {
         setLocationRelativeTo(null);
 
 
+        // Setting a listener to check that if a user presses a mouse at all to simulate a "touch here to begin" splash on a normal self-checkout//
         lblBackground.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class stockItemsManager {
 
+    // selecting where in the project to find the text files//
     public String filePath = "resources\\database.txt";
     public String separator = "\\|";
 
@@ -18,6 +19,7 @@ public class stockItemsManager {
 
     private ArrayList<stockItems> stock = new ArrayList<stockItems>();
 
+    // Method to read data to the text file in the format required, and then remove the "|" from the text file so it is in a more readable format //
     public void stockLoad(){
 
         try{
@@ -62,7 +64,7 @@ public class stockItemsManager {
         }
     }
 
-
+    //Method to save to the text file, reverting the data to include the "|" separator//
     public void itemSave(){
         try{
             FileWriter writer = new FileWriter(filePath);

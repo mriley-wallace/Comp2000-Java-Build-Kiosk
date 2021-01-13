@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class stockAdminUI extends JFrame{
     private JButton btnAdd;
@@ -35,25 +34,24 @@ public class stockAdminUI extends JFrame{
 
     public stockAdminUI() {
 
-        String[] empty = new String[4];
-        Arrays.fill(empty, "");
         btnAdd.setVisible(false);
         btnEdit.setVisible(false);
         btnDelete.setVisible(false);
 
+        // Setting up the window with my parent JPanel, initiate its close parameters to close the application, and set the size//
         stockItemsManager findItem = new stockItemsManager();
         findItem.stockLoad();
         setArrayStock(findItem.getStock());
-
-        adminUserManager staffLogin = new adminUserManager();
-        staffLogin.adminLoad();
-        setArrayAdmin(staffLogin.getUsers());
-
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(800, 800));
         pack();
         setLocationRelativeTo(null);
+
+        adminUserManager staffLogin = new adminUserManager();
+        staffLogin.adminLoad();
+        setArrayAdmin(staffLogin.getUsers());
+
         btnAdminDB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,14 +61,15 @@ public class stockAdminUI extends JFrame{
                 btnDelete.setVisible(true);
                 btnOrderStock.setEnabled(false);
                 comboBox1.setEnabled(false);
+
+                //Setting a tableModel to be nested inside the JTable. It is the tableModel we manipulate not the JTable//
                 String[] col = {"Username", "Password"};
                 DefaultTableModel adminModel = new DefaultTableModel(col, 0);
-
                 tableLoadingDB.setModel(adminModel);
                 adminModel.getDataVector().removeAllElements();
                 adminModel.addRow(col);
 
-
+            //loop through the arrays in the arraylist and add the arrays to an object array to add each item to the tableModel//
                 for (com.adminUser adminUser : admin) {
 
                     Object[] nameToArray = {adminUser.getUsername(), adminUser.getPassword()};
@@ -80,6 +79,7 @@ public class stockAdminUI extends JFrame{
                 btnAdd.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        //Quickest solution to adding a row of nulls//
                         String[] emptyRow = {""};
                         adminModel.addRow(emptyRow);
                         admin.add(new adminUser());
@@ -89,6 +89,8 @@ public class stockAdminUI extends JFrame{
                 btnEdit.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        //Loop through the rows of the current tableModel starting from position 1 not 0 because position 0 is the column names//
+                        //Sets the information up and then writes it back to the text file//
                         for (int i = 1; i < adminModel.getRowCount(); i++) {
                             if (adminModel.getValueAt(i, 0) == null) {
                                 break;
@@ -106,12 +108,15 @@ public class stockAdminUI extends JFrame{
                 btnDelete.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        // A quick catch if you don't select anything, the index returns -1 to a < 0 equation works//
                         if(tableLoadingDB.getSelectedRow() < 0){
                             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                                     "You did not select an admin for deletion.",
                                     "No Admin Selected.",
                                     JOptionPane.WARNING_MESSAGE);
                         } else {
+                            //remembering to take 1 from the selected row because it is ahead by 1 position as position 0 is the column name//
+                            //then removing it from the temporary arraylist and then saving it to the text file//
                             int deleteDB = tableLoadingDB.getSelectedRow() -1;
                             admin.remove(deleteDB);
                         }
@@ -124,7 +129,6 @@ public class stockAdminUI extends JFrame{
             }
 
         });
-
 
         btnStockDB.addActionListener(new ActionListener() {
             @Override
@@ -142,12 +146,14 @@ public class stockAdminUI extends JFrame{
                 stockModel.getDataVector().removeAllElements();
                 stockModel.addRow(col);
 
-
+                //loop through the arrays in the arraylist and add the arrays to an object array to add each item to the tableModel//
                 for (com.stockItems stockItems : newTransaction) {
 
                     Object[] nameToArray = {stockItems.getName(), stockItems.getAmount(),
                             stockItems.getPrice(), stockItems.getBarcode(), stockItems.getPlu()};
                     stockModel.addRow(nameToArray);
+
+                    //If the registered amount of stock is below 100, it will add it to the combo box ready for quick ordering.//
                     if (stockItems.getAmount() < 100) {
                         comboBox1.addItem(stockItems.getName());
                     }
@@ -171,13 +177,18 @@ public class stockAdminUI extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
+                        //When you try to order stock but there is no low stock, a polite message to say stock levels are ok and then disables the button//
                         if (!comboBox1.isEnabled()) {
                             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                                     "There is no item currently low on stock. No order made.",
                                     "Stock Levels OK",
                                     JOptionPane.WARNING_MESSAGE);
+                            btnOrderStock.setEnabled(false);
 
                         } else {
+
+                            //Orders the selected Index of the combo box and displays that name into the message box then removes it from the combo box//
+                            btnOrderStock.setEnabled(true);
                             String orderedItem = String.valueOf(comboBox1.getSelectedItem());
                             int index = comboBox1.getSelectedIndex();
                             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
@@ -191,7 +202,6 @@ public class stockAdminUI extends JFrame{
                                 comboBox1.setEnabled(false);
                             }
 
-
                         }
                     }
                 });
@@ -199,10 +209,9 @@ public class stockAdminUI extends JFrame{
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
-
+                        //Loop through the rows of the current tableModel starting from position 1 not 0 because position 0 is the column names//
+                        //Sets the information up and then writes it back to the text file//
                         for (int i = 1; i < stockModel.getRowCount(); i++) {
-
                             if (stockModel.getValueAt(i, 0) == null) {
                                 break;
                             } else {
@@ -223,12 +232,15 @@ public class stockAdminUI extends JFrame{
                 btnDelete.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        // A quick catch if you don't select anything, the index returns -1 to a < 0 equation works//
                         if(tableLoadingDB.getSelectedRow() < 0){
                             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                                     "You did not select an admin for deletion.",
                                     "No Admin Selected.",
                                     JOptionPane.WARNING_MESSAGE);
                         } else {
+                            //remembering to take 1 from the selected row because it is ahead by 1 position as position 0 is the column name//
+                            //then removing it from the temporary arraylist and then saving it to the text file//
                             int deleteDB = tableLoadingDB.getSelectedRow() -1;
                             newTransaction.remove(deleteDB);
                         }
@@ -249,10 +261,7 @@ public class stockAdminUI extends JFrame{
                 Page.setVisible(true);
             }
         });
-
     }
-
-
 
     public static void main(String[] args) {
         stockAdminUI Page = new stockAdminUI();

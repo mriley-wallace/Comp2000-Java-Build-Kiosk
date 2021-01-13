@@ -33,6 +33,8 @@ public class kioskMainUI extends JFrame {
     private JTextArea receiptPanel;
     private JLabel lblCurrency;
 
+
+    //Initiating the stock arraylist//
     private ArrayList<stockItems> newTransaction = new ArrayList<>();
 
     public void setArrayStock(ArrayList<stockItems> newTransaction) {
@@ -49,11 +51,15 @@ public class kioskMainUI extends JFrame {
     public kioskMainUI() {
         lblCurrency.setVisible(false);
 
+        //Loading what is in the database text file into the local arraylist//
         stockItemsManager findItem = new stockItemsManager();
         findItem.stockLoad();
         setArrayStock(findItem.getStock());
+
         cashBtn.setVisible(false);
         cardBtn.setVisible(false);
+
+        // Setting up the window with my parent JPanel, initiate its close parameters to close the application, and set the size//
         setContentPane(mainUI);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         CashPaymentReset();
@@ -71,6 +77,8 @@ public class kioskMainUI extends JFrame {
                 txtItemScan.setVisible(false);
                 btnAddStock.setVisible(false);
 
+                // A simple setup for the next 3 buttons upon clicking cash. The 3 buttons will always give you: Enter an amount || The exact cost of the transaction ||
+                // and finally a number that is the closest decipherable note or note combinations (5 times table)//
                 String runningToString = String.format("%.02f", runningTotal);
                 btnExactAmount.setText("£" + runningToString);
 
@@ -116,8 +124,10 @@ public class kioskMainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 stockItems addedItem = new stockItems();
                 try {
+                    // In this for loop we are checking the temporary arraylist for an item match from the numbers entered in the scanned item box//
                     for (int currentIndex = 0; currentIndex < newTransaction.size(); currentIndex++) {
 
+                        //A break and warning if you enter nothing. Little friendly nudge in the teeth//
                         if (txtItemScan.getText().equals("")) {
                             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                                     "You did not enter a product.",
@@ -128,11 +138,13 @@ public class kioskMainUI extends JFrame {
                             addedItem.setBarcode(Long.parseLong(txtItemScan.getText()));
                         }
 
+                        // if clause if we find a match//
                         if (addedItem.getBarcode() == newTransaction.get(currentIndex).getBarcode()
                                 || addedItem.getBarcode() == newTransaction.get(currentIndex).getPlu()) {
 
                             shoppingList.setText("");
 
+                            //Actively updating the stock quantity of the item, you will NOT be able to scan more items than there is stock for//
                             if (newTransaction.get(currentIndex).getAmount() > 0) {
                                 newTransaction.get(currentIndex).setAmount(newTransaction.get(currentIndex).getAmount() - 1);
                             } else {
@@ -143,6 +155,7 @@ public class kioskMainUI extends JFrame {
                                 newTransaction.get(currentIndex).setActive(newTransaction.get(currentIndex).getActive() - 1);
                                 runningTotal = runningTotal - newTransaction.get(currentIndex).getPrice();
                             }
+                            //Setting the active number to +1 (which is only used temporarily to store multiple of the same item we are scanning//
                             int tempMore = newTransaction.get(currentIndex).getActive();
                             newTransaction.get(currentIndex).setActive(tempMore + 1);
 
@@ -155,6 +168,8 @@ public class kioskMainUI extends JFrame {
                             /*----------------------------------------------------------------------------------*/
 
 
+                            // Going through the arrays in the arraylist and only selecting the array if its active number is above 0. That means it has been used
+                            // in the shopping cart so it can put it back into the shopping cart JTextArea//
                             for (com.stockItems stockItems : newTransaction) {
 
                                 if (stockItems.getActive() > 0) {
@@ -207,6 +222,7 @@ public class kioskMainUI extends JFrame {
                             "No Amount Specified",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
+                    //Ensuring the amount entered is received as a float so as not to interrupt the change process//
                     float enterAmount;
                     enterAmount = Float.parseFloat(String.valueOf(txtEnteredAmount.getText()));
                     String priceToString = String.format("%.02f", enterAmount);
@@ -279,6 +295,7 @@ public class kioskMainUI extends JFrame {
         cardBtn.setVisible(false);
         lblActiveTotalPrint.setText("£0.00");
 
+        //Resets all the active to 0 ready for a new customer without having to close the application//
         for (com.stockItems stockItems : newTransaction) {
             stockItems.setActive(0);
         }
@@ -299,6 +316,7 @@ public class kioskMainUI extends JFrame {
                 for (int i = 0; i < 999999999; i++) {
                     new Date();
                 }
+                //Taking the company name and details from the admin manager class, plus the current shopping cart text, plus the running total, cash paid and given change//
                         receiptString = adminUserManager.companyName + "\n" + "\n" + adminUserManager.companyDetails + "\n" + "------------------" + "\n" + "\n"
                                 + shoppingList.getText() + "\n" + "\n" + "\n" + "\n" + "------------------" + "\n" + "Total Today: £" + runningTotalFormat + "\n"
                                 + "\n" + "Cash Payment of: £" + cashTotalToString + "\n" + "\n" + "Change given: £" + lblGivenChange.getText();
@@ -326,6 +344,7 @@ public class kioskMainUI extends JFrame {
                 for (int i = 0; i < 999999999; i++) {
                     new Date();
                 }
+                //Taking the company name and details from the admin manager class, plus the current shopping cart text, plus the running total, and verified by card for the total amount//
                     receiptString = adminUserManager.companyName + "\n" + "\n" + adminUserManager.companyDetails + "\n" + "------------------" + "\n" + "\n" + shoppingList.getText()
                             + "\n" + "\n" + "\n" + "\n" + "------------------" + "\n" + "Total Today: £" + runningTotalFormat + "\n" + "\n" + "\n" + "Verified by card for amount: £" + runningTotalFormat;
 

@@ -22,27 +22,30 @@ public class adminSplash extends JFrame {
 
 
     public adminSplash(){
+
+        // Setting up the window with my parent JPanel, initiate its close parameters to close the application, and set the size//
     setContentPane(mainPanel);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(800, 800));
+        pack();
+        setLocationRelativeTo(null);
 
+    //Loading the admin text file ready for use//
     adminUserManager staffLogin = new adminUserManager();
     staffLogin.adminLoad();
     setArrayAdmin(staffLogin.getUsers());
-
-    pack();
-    setLocationRelativeTo(null);
 
         beginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //Using a loop to go through the arrays in the arraylist for admin to find a match based on whats been entered//
+                // A boolean catch to stop a bug of the error message pane appearing even after a successful entry//
                 boolean errorCatch = false;
                 adminUser tempAdmin = new adminUser();
                 tempAdmin.setUsername(txtUsername.getText());
                 tempAdmin.setPassword(txtPassword.getText());
 
-      /*          try {*/
                     for (com.adminUser adminUser : admin) {
                         if (tempAdmin.getUsername().equals(adminUser.getUsername())
                                 && tempAdmin.getPassword().equals(adminUser.getPassword())) {
@@ -57,10 +60,6 @@ public class adminSplash extends JFrame {
                         errorCatch = true;
                     }
 
-
-                /*} catch (Exception f){
-                    f.printStackTrace();
-                }*/
                 if (errorCatch){
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                             "You did not enter the correct credentials.",
