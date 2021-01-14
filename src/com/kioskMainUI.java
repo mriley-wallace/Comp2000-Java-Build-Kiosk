@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class kioskMainUI extends JFrame {
@@ -362,6 +361,11 @@ public class kioskMainUI extends JFrame {
         for (com.stockItems stockItems : newTransaction) {
             stockItems.setActive(0);
         }
+    }
+
+    public static void main(String[] args) {
+        kioskMainUI Page = new kioskMainUI();
+        Page.setVisible(true);
     }
 }
 

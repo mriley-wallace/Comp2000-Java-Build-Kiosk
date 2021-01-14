@@ -3,8 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Comp2000_Java_Build_Kiosk_jar</output-path>
     <root id="archive" name="Comp2000-Java-Build-Kiosk.jar">
       <element id="module-output" name="Comp2000-Java-Build-Kiosk" />
-      <element id="file-copy" path="$PROJECT_DIR$/resources/adminUser.txt" />
-      <element id="file-copy" path="$PROJECT_DIR$/resources/database.txt" />
+      <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
     </root>
   </artifact>
 </component>

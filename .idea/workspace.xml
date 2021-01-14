@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="AutomatedKiosk" />
+      <artifact name="Comp2000-Java-Build-Kiosk:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
@@ -15,8 +15,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="UML Class" />
+        <option value="JUnit4 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -45,12 +47,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/resources" />
+    <property name="DefaultPlantUmlFileTemplate" value="UML Class" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="1" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="257" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.24506749" />
@@ -60,12 +69,21 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\midge\Documents\GitHub\Comp2000-Java-Build-Kiosk\src\test" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\midge\Documents\GitHub\Comp2000-Java-Build-Kiosk" />
       <recent name="C:\Users\midge\Documents\GitHub\Comp2000-Java-Build-Kiosk\src\resources" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.kioskSplash">
+  <component name="RunManager" selected="Application.stockAdminUI">
     <configuration name="adminSplash" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.adminSplash" />
       <module name="Comp2000-Java-Build-Kiosk" />
@@ -139,6 +157,36 @@
       <toRun name="kioskMainUI" type="Application" />
       <method v="2" />
     </configuration>
+    <configuration name="adminUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Comp2000-Java-Build-Kiosk" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com" />
+      <option name="MAIN_CLASS_NAME" value="com.adminUserTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="kioskMainUITest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Comp2000-Java-Build-Kiosk" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com" />
+      <option name="MAIN_CLASS_NAME" value="com.kioskMainUITest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.kioskMainUI" />
       <item itemvalue="Application.adminSplash" />
@@ -146,9 +194,13 @@
       <item itemvalue="Application.stockAdminUI" />
       <item itemvalue="Application.kioskMain" />
       <item itemvalue="Compound.Unnamed" />
+      <item itemvalue="JUnit.adminUserTest" />
+      <item itemvalue="JUnit.kioskMainUITest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.kioskMainUITest" />
+        <item itemvalue="JUnit.adminUserTest" />
         <item itemvalue="Application.kioskMain" />
       </list>
     </recent_temporary>

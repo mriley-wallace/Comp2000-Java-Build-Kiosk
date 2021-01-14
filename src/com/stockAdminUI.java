@@ -127,7 +127,6 @@ public class stockAdminUI extends JFrame{
                     }
                 });
             }
-
         });
 
         btnStockDB.addActionListener(new ActionListener() {
@@ -157,7 +156,6 @@ public class stockAdminUI extends JFrame{
                     if (stockItems.getAmount() < 100) {
                         comboBox1.addItem(stockItems.getName());
                     }
-
                 }
 
                 btnAdd.addActionListener(new ActionListener() {
@@ -245,7 +243,7 @@ public class stockAdminUI extends JFrame{
                             newTransaction.remove(deleteDB);
                         }
                         findItem.itemSave();
-                        setVisible(false);
+                        dispose();
                         stockAdminUI Page = new stockAdminUI();
                         Page.setVisible(true);
                     }

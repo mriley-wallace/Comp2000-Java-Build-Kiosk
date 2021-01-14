@@ -1,6 +1,8 @@
 package com;
 
+
 public class adminUser {
+
     private String username;
     private String password;
 
@@ -20,5 +22,4 @@ public class adminUser {
     public void setPassword(String password){
         this.password = password;
     }
-
 }
