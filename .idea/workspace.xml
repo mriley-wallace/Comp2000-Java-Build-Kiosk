@@ -54,6 +54,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="ToolWindowPlantUML.ShowToolbar" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="1" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="257" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
@@ -83,7 +84,7 @@
       <recent name="com" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.stockAdminUI">
+  <component name="RunManager" selected="Application.kioskMainUI">
     <configuration name="adminSplash" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.adminSplash" />
       <module name="Comp2000-Java-Build-Kiosk" />

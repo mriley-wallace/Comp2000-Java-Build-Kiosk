@@ -100,7 +100,7 @@ public class stockAdminUI extends JFrame{
                             }
                             staffLogin.adminSave();
                         }
-                        setVisible(false);
+                        dispose();
                         stockAdminUI Page = new stockAdminUI();
                         Page.setVisible(true);
                     }
@@ -121,7 +121,7 @@ public class stockAdminUI extends JFrame{
                             admin.remove(deleteDB);
                         }
                         staffLogin.adminSave();
-                        setVisible(false);
+                        dispose();
                         stockAdminUI Page = new stockAdminUI();
                         Page.setVisible(true);
                     }
@@ -222,7 +222,7 @@ public class stockAdminUI extends JFrame{
                             }
                             findItem.itemSave();
                         }
-                        setVisible(false);
+                        dispose();
                         stockAdminUI Page = new stockAdminUI();
                         Page.setVisible(true);
                     }
