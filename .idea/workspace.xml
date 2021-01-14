@@ -56,11 +56,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ToolWindowPlantUML.ShowToolbar" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="1" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="257" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/Comp2000_Java_Build_Kiosk_jar" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.24506749" />
@@ -84,7 +85,7 @@
       <recent name="com" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.kioskMainUI">
+  <component name="RunManager" selected="JAR Application.Comp2000-Java-Build-Kiosk.jar">
     <configuration name="adminSplash" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.adminSplash" />
       <module name="Comp2000-Java-Build-Kiosk" />
@@ -188,6 +189,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Comp2000-Java-Build-Kiosk.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/Comp2000_Java_Build_Kiosk_jar/Comp2000-Java-Build-Kiosk.jar" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.kioskMainUI" />
       <item itemvalue="Application.adminSplash" />
@@ -197,9 +202,11 @@
       <item itemvalue="Compound.Unnamed" />
       <item itemvalue="JUnit.adminUserTest" />
       <item itemvalue="JUnit.kioskMainUITest" />
+      <item itemvalue="JAR Application.Comp2000-Java-Build-Kiosk.jar" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.Comp2000-Java-Build-Kiosk.jar" />
         <item itemvalue="JUnit.kioskMainUITest" />
         <item itemvalue="JUnit.adminUserTest" />
         <item itemvalue="Application.kioskMain" />
